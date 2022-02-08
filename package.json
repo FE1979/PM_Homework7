@@ -1,0 +1,17 @@
+{
+  "name": "hw7_ajax",
+  "version": "1.0.0",
+  "description": "PM homework 7 (AJAX)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack"
+  },
+  "author": "Roman Kovtunets",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
