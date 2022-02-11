@@ -47,6 +47,7 @@ function searchUser() {
                 pop.classList.remove('d-none');
                 pop.textContent = `Found: ${result.login}`;
                 userInfo = result;
+                console.log(result)
             } else {
                 pop.textContent = 'No suggestions'
             }
@@ -77,6 +78,7 @@ function renderUserInfo(userInfo) {
 }
 
 function renderRepos(repos) {
+    console.log(repos)
     const container = document.querySelector('.repos-list');
     while (container.firstChild) {
         container.firstChild.remove()
@@ -99,6 +101,7 @@ function renderRepos(repos) {
 }
 
 function renderFollowers(followers) {
+    console.log(followers)
     const container = document.querySelector('.followers-list');
     while (container.firstChild) {
         container.firstChild.remove()
