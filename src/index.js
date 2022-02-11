@@ -9,27 +9,41 @@ const searchInput = document.getElementById('user-search');
 
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        renderUser();
-        pop.classList.add('d-none');
+        searchOrRender();   
     }
 });
 
+searchBtn.addEventListener('click', searchOrRender);
+
 pop.addEventListener('click', () => {
-    renderUser();
+    renderUser(userInfo);
     pop.classList.add('d-none');
 })
 
-searchBtn.addEventListener('click', () => {
-    renderUser();
-    pop.classList.add('d-none')
-});
-
 searchInput.addEventListener('input', (e) => {
     const query = e.target.value;
-    if (query.length >= 3) searchUser();
+    if (query.length >= 3) searchUserLive();
 })
 
+function searchOrRender() {
+    if (!userInfo) {
+        searchUser();
+    } else {
+        renderUser(userInfo);
+        pop.classList.add('d-none');
+    }
+}
+
 function searchUser() {
+    const query = document.getElementById('user-search').value;
+    getUser(query)
+        .then(result => {
+            userInfo = result;
+            renderUser(userInfo);
+        })
+}
+
+function searchUserLive() {
     const query = document.getElementById('user-search').value;
     getUser(query)
         .then(result => {
@@ -43,7 +57,7 @@ function searchUser() {
         })
 }
 
-function renderUser() {
+function renderUser(userInfo) {
     renderUserInfo(userInfo);
 
     getRepos(userInfo.repos_url)
