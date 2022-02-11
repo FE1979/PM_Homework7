@@ -1,19 +1,18 @@
-const { fetchData } = require('./requests')
+const { fetchData } = require('./requests');
+const { usersUrl, getOptions } = require('./api_config');
 
-const apiUrl = "https://api.github.com"
-const usersUrl = `${apiUrl}/users`;
 
-const getUser = (user, options) => {
+const getUser = (user) => {
     const url = `${usersUrl}/${user}`;
-    return fetchData(url, options)
+    return fetchData(url, getOptions)
 }
 
-const getRepos = (reposUrl, options) => {
-    return fetchData(reposUrl, options)
+const getRepos = (reposUrl) => {
+    return fetchData(reposUrl, getOptions)
 }
 
-const getFollowers = (followersUrl, options) =>{
-    return fetchData(followersUrl, options)
+const getFollowers = (followersUrl) =>{
+    return fetchData(followersUrl, getOptions)
 }
 
 module.exports = { getUser, getRepos, getFollowers }

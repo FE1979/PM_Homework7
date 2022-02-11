@@ -1,15 +1,5 @@
 const { getUser, getRepos, getFollowers } = require("./get_user");
 
-const headers = {
-    "Accept": "application/vnd.github.v3+json"
-}
-
-const get = {
-    method: 'GET',
-    headers: headers,
-    mode: 'cors'
-}
-
 const nopic = './img/nopic.png';
 let userInfo = null;
 
@@ -41,7 +31,7 @@ searchInput.addEventListener('input', (e) => {
 
 function searchUser() {
     const query = document.getElementById('user-search').value;
-    getUser(query, get)
+    getUser(query)
         .then(result => {
             if (result) {
                 pop.classList.remove('d-none');
@@ -56,10 +46,10 @@ function searchUser() {
 function renderUser() {
     renderUserInfo(userInfo);
 
-    getRepos(userInfo.repos_url, get)
+    getRepos(userInfo.repos_url)
         .then(repos => renderRepos(repos));
 
-    getFollowers(userInfo.followers_url, get)
+    getFollowers(userInfo.followers_url)
         .then(followers => renderFollowers(followers))
 }
 
