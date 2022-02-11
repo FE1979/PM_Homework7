@@ -1,18 +1,4 @@
-const apiUrl = "https://api.github.com"
-const usersUrl = `${apiUrl}/users`;
-
-const headers = {
-    "Accept": "application/vnd.github.v3+json"
-}
-
-const get = {
-    method: 'GET',
-    headers: headers,
-    mode: 'cors'
-}
-
 const getJSONorReject = (response) => {
-    console.log(response)
     if (!response.ok) {
         return null;
     } else {
