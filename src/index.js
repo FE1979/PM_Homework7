@@ -47,7 +47,6 @@ function searchUser() {
                 pop.classList.remove('d-none');
                 pop.textContent = `Found: ${result.login}`;
                 userInfo = result;
-                console.log(result)
             } else {
                 pop.textContent = 'No suggestions'
             }
@@ -78,10 +77,16 @@ function renderUserInfo(userInfo) {
 }
 
 function renderRepos(repos) {
-    console.log(repos)
     const container = document.querySelector('.repos-list');
     while (container.firstChild) {
         container.firstChild.remove()
+    }
+
+    if (repos.length === 0) {
+        const listItem = document.createElement('li');
+        listItem.textContent = 'No repositories found';
+        container.appendChild(listItem);
+        return;
     }
 
     const reposList = repos.map(repo => {
@@ -101,10 +106,16 @@ function renderRepos(repos) {
 }
 
 function renderFollowers(followers) {
-    console.log(followers)
     const container = document.querySelector('.followers-list');
     while (container.firstChild) {
         container.firstChild.remove()
+    }
+
+    if (followers.length === 0) {
+        const listItem = document.createElement('li');
+        listItem.textContent = 'No followers found';
+        container.appendChild(listItem);
+        return;
     }
 
     const followersList = followers.map(follower => {
