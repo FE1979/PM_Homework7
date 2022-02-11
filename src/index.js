@@ -60,7 +60,7 @@ function renderUser() {
         .then(repos => renderRepos(repos));
 
     getFollowers(userInfo.followers_url, get)
-        .then(followers => showFollowers(followers))
+        .then(followers => renderFollowers(followers))
 }
 
 function renderUserInfo(userInfo) {
@@ -98,7 +98,7 @@ function renderRepos(repos) {
     reposList.forEach(repo => container.appendChild(repo))
 }
 
-function showFollowers(followers) {
+function renderFollowers(followers) {
     const container = document.querySelector('.followers-list');
     while (container.firstChild) {
         container.firstChild.remove()
