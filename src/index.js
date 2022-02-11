@@ -1,27 +1,15 @@
 const { getUser } = require('./get_user');
-const { renderUser } = require('./render')
+const { renderUser } = require('./render');
+const { debounce } = require('./debounce');
 
 let userInfo = null;
-
-const pop = document.querySelector('.found')
+const pop = document.querySelector('.found');
 const searchBtn = document.getElementById('button-search');
 const searchInput = document.getElementById('user-search');
 
-const debounce = (fn, time=500) => {
-    let timer;
-    return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn.apply(this, args), time)
-    }
-}
-
 searchUserLive = debounce(searchUserLive);
 
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        searchOrRender();   
-    }
-});
+searchInput.addEventListener('keypress', (e) => {if (e.key === 'Enter') searchOrRender()});
 
 searchBtn.addEventListener('click', searchOrRender);
 
@@ -45,7 +33,7 @@ function searchOrRender() {
 }
 
 function searchUser() {
-    const query = document.getElementById('user-search').value;
+    const query = searchInput.value;
     getUser(query)
         .then(result => {
             userInfo = result;
@@ -54,7 +42,7 @@ function searchUser() {
 }
 
 function searchUserLive() {
-    const query = document.getElementById('user-search').value;
+    const query = searchInput.value;
     getUser(query)
         .then(result => {
             if (result) {
