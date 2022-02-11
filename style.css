@@ -4,6 +4,10 @@
     margin-bottom: 30px;
 }
 
+li {
+    list-style: none;
+}
+
 li img, h5 img {
     width: 40px;
     height: 40px;

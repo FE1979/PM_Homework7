@@ -8,7 +8,6 @@ const headers = {
 const getOptions = {
     method: 'GET',
     headers: headers,
-    mode: 'cors'
 }
 
 module.exports = { usersUrl, getOptions };

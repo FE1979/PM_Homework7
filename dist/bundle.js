@@ -15,7 +15,17 @@
   \***************************/
 /***/ ((module) => {
 
-eval("const apiUrl = \"https://api.github.com\";\r\nconst usersUrl = `${apiUrl}/users`;\r\n\r\nconst headers = {\r\n    \"Accept\": \"application/vnd.github.v3+json\"\r\n}\r\n\r\nconst getOptions = {\r\n    method: 'GET',\r\n    headers: headers,\r\n    mode: 'cors'\r\n}\r\n\r\nmodule.exports = { usersUrl, getOptions };\r\n\n\n//# sourceURL=webpack://hw7_ajax/./src/api_config.js?");
+eval("const apiUrl = \"https://api.github.com\";\r\nconst usersUrl = `${apiUrl}/users`;\r\n\r\nconst headers = {\r\n    \"Accept\": \"application/vnd.github.v3+json\"\r\n}\r\n\r\nconst getOptions = {\r\n    method: 'GET',\r\n    headers: headers,\r\n}\r\n\r\nmodule.exports = { usersUrl, getOptions };\r\n\n\n//# sourceURL=webpack://hw7_ajax/./src/api_config.js?");
+
+/***/ }),
+
+/***/ "./src/debounce.js":
+/*!*************************!*\
+  !*** ./src/debounce.js ***!
+  \*************************/
+/***/ (function(module) {
+
+eval("const debounce = (fn, time = 500) => {\r\n    let timer;\r\n    return (...args) => {\r\n        clearTimeout(timer);\r\n        timer = setTimeout(() => fn.apply(this, args), time)\r\n    }\r\n}\r\n\r\nmodule.exports = { debounce }\n\n//# sourceURL=webpack://hw7_ajax/./src/debounce.js?");
 
 /***/ }),
 
@@ -33,9 +43,9 @@ eval("const { fetchData } = __webpack_require__(/*! ./requests */ \"./src/reques
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const { getUser } = __webpack_require__(/*! ./get_user */ \"./src/get_user.js\");\r\nconst { renderUser } = __webpack_require__(/*! ./render */ \"./src/render.js\")\r\n\r\nlet userInfo = null;\r\n\r\nconst pop = document.querySelector('.found')\r\nconst searchBtn = document.getElementById('button-search');\r\nconst searchInput = document.getElementById('user-search');\r\n\r\nconst debounce = (fn, time=500) => {\r\n    let timer;\r\n    return (...args) => {\r\n        clearTimeout(timer);\r\n        timer = setTimeout(() => fn.apply(this, args), time)\r\n    }\r\n}\r\n\r\nsearchUserLive = debounce(searchUserLive);\r\n\r\nsearchInput.addEventListener('keypress', (e) => {\r\n    if (e.key === 'Enter') {\r\n        searchOrRender();   \r\n    }\r\n});\r\n\r\nsearchBtn.addEventListener('click', searchOrRender);\r\n\r\npop.addEventListener('click', () => {\r\n    renderUser(userInfo);\r\n    pop.classList.add('d-none');\r\n})\r\n\r\nsearchInput.addEventListener('input', (e) => {\r\n    const query = e.target.value;\r\n    if (query.length >= 3) searchUserLive();\r\n})\r\n\r\nfunction searchOrRender() {\r\n    if (!userInfo) {\r\n        searchUser();\r\n    } else {\r\n        renderUser(userInfo);\r\n        pop.classList.add('d-none');\r\n    }\r\n}\r\n\r\nfunction searchUser() {\r\n    const query = document.getElementById('user-search').value;\r\n    getUser(query)\r\n        .then(result => {\r\n            userInfo = result;\r\n            renderUser(userInfo);\r\n        })\r\n}\r\n\r\nfunction searchUserLive() {\r\n    const query = document.getElementById('user-search').value;\r\n    getUser(query)\r\n        .then(result => {\r\n            if (result) {\r\n                pop.classList.remove('d-none');\r\n                pop.textContent = `Found: ${result.login}`;\r\n                userInfo = result;\r\n            } else {\r\n                pop.textContent = 'No suggestions'\r\n            }\r\n        })\r\n}\r\n\n\n//# sourceURL=webpack://hw7_ajax/./src/index.js?");
+eval("const { getUser } = __webpack_require__(/*! ./get_user */ \"./src/get_user.js\");\r\nconst { renderUser } = __webpack_require__(/*! ./render */ \"./src/render.js\");\r\nconst { debounce } = __webpack_require__(/*! ./debounce */ \"./src/debounce.js\");\r\n\r\nlet userInfo = null;\r\nconst pop = document.querySelector('.found');\r\nconst searchBtn = document.getElementById('button-search');\r\nconst searchInput = document.getElementById('user-search');\r\n\r\nsearchUserLive = debounce(searchUserLive);\r\n\r\nsearchInput.addEventListener('keypress', (e) => {if (e.key === 'Enter') searchOrRender()});\r\n\r\nsearchBtn.addEventListener('click', searchOrRender);\r\n\r\npop.addEventListener('click', () => {\r\n    renderUser(userInfo);\r\n    pop.classList.add('d-none');\r\n})\r\n\r\nsearchInput.addEventListener('input', (e) => {\r\n    const query = e.target.value;\r\n    if (query.length >= 3) searchUserLive();\r\n})\r\n\r\nfunction searchOrRender() {\r\n    if (!userInfo) {\r\n        searchUser();\r\n    } else {\r\n        renderUser(userInfo);\r\n        pop.classList.add('d-none');\r\n    }\r\n}\r\n\r\nfunction searchUser() {\r\n    const query = searchInput.value;\r\n    getUser(query)\r\n        .then(result => {\r\n            userInfo = result;\r\n            renderUser(userInfo);\r\n        })\r\n}\r\n\r\nfunction searchUserLive() {\r\n    const query = searchInput.value;\r\n    getUser(query)\r\n        .then(result => {\r\n            if (result) {\r\n                pop.classList.remove('d-none');\r\n                pop.textContent = `Found: ${result.login}`;\r\n                userInfo = result;\r\n            } else {\r\n                pop.textContent = 'No suggestions'\r\n            }\r\n        })\r\n}\r\n\n\n//# sourceURL=webpack://hw7_ajax/./src/index.js?");
 
 /***/ }),
 
@@ -89,7 +99,7 @@ eval("const getJSONorReject = (response) => {\r\n    if (!response.ok) {\r\n    
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
 /******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
 /******/ 	
 /******/ })()
