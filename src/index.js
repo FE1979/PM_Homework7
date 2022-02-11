@@ -19,7 +19,7 @@ const searchInput = document.getElementById('user-search');
 
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        searchAndRenderUser();
+        renderUser();
         pop.classList.add('d-none');
     }
 });
@@ -30,7 +30,7 @@ pop.addEventListener('click', () => {
 })
 
 searchBtn.addEventListener('click', () => {
-    searchAndRenderUser();
+    renderUser();
     pop.classList.add('d-none')
 });
 
@@ -62,20 +62,6 @@ function renderUser() {
     getFollowers(userInfo.followers_url, get)
         .then(followers => showFollowers(followers))
 }
-
-function searchAndRenderUser() {
-    const query = document.getElementById('user-search').value;
-
-    getUser(query, get)
-        .then(result => {
-            renderUserInfo(result);
-            getRepos(result.repos_url, get)
-                .then(repos => renderRepos(repos));
-            getFollowers(result.followers_url, get)
-                .then(followers => showFollowers(followers))
-        })
-}
-
 
 function renderUserInfo(userInfo) {
     const avatar = document.querySelector('.user-repos img')
