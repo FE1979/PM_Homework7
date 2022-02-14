@@ -1,13 +1,13 @@
-const { getRepos, getFollowers } = require('./get_user');
+const { getData } = require('./get_user');
 const nopic = './img/nopic.png';
 
 function renderUser(userInfo) {
     renderUserInfo(userInfo);
 
-    getRepos(userInfo.repos_url)
+    getData(userInfo.repos_url)
         .then(repos => renderRepos(repos));
 
-    getFollowers(userInfo.followers_url)
+    getData(userInfo.followers_url)
         .then(followers => renderFollowers(followers))
 }
 
