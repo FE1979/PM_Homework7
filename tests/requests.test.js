@@ -7,8 +7,6 @@ global.console = {
 
 global.fetch = jest.fn();
 
-
-
 describe('requests tests', () => {
     describe('getJSONorReject test', () => {
         test('should return null if response is not ok', () => {
